@@ -1,0 +1,20 @@
+.welcome {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
