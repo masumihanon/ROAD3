@@ -486,7 +486,7 @@ function AppContent() {
             localStorage.removeItem("currentAccount");
             localStorage.removeItem("accounts");
 
-            window.location.href = "/login";
+            window.location.href = "/ROAD3/#/login";
           }}
         />
       )}
