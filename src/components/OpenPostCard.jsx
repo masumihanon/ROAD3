@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./PostCard.css";
 
 const R18_REVEALED_TEXTS_KEY = "road3_r18_revealed_texts";
 const R18_REVEALED_MEDIA_KEY = "road3_r18_revealed_media";
