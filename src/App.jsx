@@ -747,8 +747,15 @@ function AppContent() {
           element={isLoggedIn ? <FileList /> : <Navigate to="/login" />}
         />
 
-        <Route path="/open/r18" element={<OpenR18 />} />
-        <Route path="/settings/r18" element={<R18Settings />} />
+        <Route
+  path="/open/r18"
+  element={isLoggedIn ? <OpenR18 /> : <Navigate to="/login" />}
+/>
+
+<Route
+  path="/settings/r18"
+  element={isLoggedIn ? <R18Settings /> : <Navigate to="/login" />}
+/>
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
