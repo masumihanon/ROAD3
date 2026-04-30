@@ -181,45 +181,45 @@ function Header({
       <div className="app-header-divider" />
 
       <div className="app-header-account">
-        <div className="user-avatar" aria-hidden="true">
-          {currentAccount?.avatarImage ? (
-            <img
-              src={currentAccount.avatarImage}
-              alt={name}
-              className="user-avatar-image"
-            />
-          ) : (
-            initial
-          )}
-        </div>
+  <div className="user-avatar" aria-hidden="true">
+    {currentAccount?.avatarImage ? (
+      <img
+        src={currentAccount.avatarImage}
+        alt={name}
+        className="user-avatar-image"
+      />
+    ) : (
+      initial
+    )}
+  </div>
 
-        {isEditing ? (
-          <input
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="name-input"
-            autoFocus
-          />
-        ) : (
-          <div className="user-name-block">
-            <span className="user-name">{name}</span>
-            <span className="user-handle">
-              {handle ? `@${String(handle).replace(/^@/, "")}` : ""}
-            </span>
-          </div>
-        )}
+  <div className="user-name-block">
+    {isEditing ? (
+      <input
+        value={editedName}
+        onChange={(e) => setEditedName(e.target.value)}
+        onKeyDown={handleKeyDown}
+        className="name-input"
+        autoFocus
+      />
+    ) : (
+      <>
+        <span className="user-name">{name}</span>
+        <span className="user-handle">
+          {handle ? `@${String(handle).replace(/^@/, "")}` : ""}
+        </span>
+      </>
+    )}
+  </div>
 
-        <button
-          type="button"
-          className="edit-icon"
-          onClick={handleEditToggle}
-          aria-label="名前を編集"
-          title="名前を編集"
-        >
-          ✏️
-        </button>
-      </div>
+  <button
+    type="button"
+    className="edit-icon"
+    onClick={handleEditToggle}
+  >
+    ✏️
+  </button>
+</div>
     </header>
   );
 }
