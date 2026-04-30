@@ -11,7 +11,7 @@ function OpenDM() {
 
   const longPressTimer = useRef(null);
 
-  useEffect(() => {
+  const loadChats = () => {
     const saved = JSON.parse(localStorage.getItem("dmChats") || "[]");
     const blockedUsers = JSON.parse(localStorage.getItem("blockedUsers") || "[]");
 
@@ -19,62 +19,22 @@ function OpenDM() {
       (chat) => !blockedUsers.includes(String(chat.userId))
     );
 
-    if (visibleChats.length > 0) {
-      const sorted = [...visibleChats].sort((a, b) => {
-        const timeA = a.updatedAt || 0;
-        const timeB = b.updatedAt || 0;
-        return timeB - timeA;
-      });
-      setChats(sorted);
-    } else {
-      const demoChats = [
-        {
-          userId: "hanon",
-          name: "はのん",
-          handle: "@hanon",
-          time: "10:30",
-          lastMessage: "こんにちは！",
-          unread: 1,
-          updatedAt: Date.now(),
-          messages: [
-            {
-              id: 1,
-              sender: "other",
-              text: "こんにちは！",
-              time: "10:30",
-            },
-            {
-              id: 2,
-              sender: "me",
-              text: "やっほー",
-              time: "10:31",
-              isRead: true,
-            },
-          ],
-        },
-      ];
+    const sorted = [...visibleChats].sort((a, b) => {
+      const timeA = a.updatedAt || 0;
+      const timeB = b.updatedAt || 0;
+      return timeB - timeA;
+    });
 
-      localStorage.setItem("dmChats", JSON.stringify(demoChats));
-      setChats(demoChats);
-    }
+    setChats(sorted);
+  };
+
+  useEffect(() => {
+    loadChats();
   }, []);
 
   useEffect(() => {
     if (location.state?.refresh) {
-      const saved = JSON.parse(localStorage.getItem("dmChats") || "[]");
-      const blockedUsers = JSON.parse(localStorage.getItem("blockedUsers") || "[]");
-
-      const visibleChats = saved.filter(
-        (chat) => !blockedUsers.includes(String(chat.userId))
-      );
-
-      const sorted = [...visibleChats].sort((a, b) => {
-        const timeA = a.updatedAt || 0;
-        const timeB = b.updatedAt || 0;
-        return timeB - timeA;
-      });
-
-      setChats(sorted);
+      loadChats();
     }
   }, [location.state]);
 
@@ -88,7 +48,7 @@ function OpenDM() {
     const saved = JSON.parse(localStorage.getItem("dmChats") || "[]");
 
     const updatedChats = saved.map((c) => {
-      if (c.userId === chat.userId) {
+      if (String(c.userId) === String(chat.userId)) {
         return {
           ...c,
           unread: 0,
@@ -100,7 +60,7 @@ function OpenDM() {
     localStorage.setItem("dmChats", JSON.stringify(updatedChats));
 
     const targetChat =
-      updatedChats.find((c) => c.userId === chat.userId) || {
+      updatedChats.find((c) => String(c.userId) === String(chat.userId)) || {
         ...chat,
         unread: 0,
       };
@@ -133,19 +93,7 @@ function OpenDM() {
     );
 
     localStorage.setItem("dmChats", JSON.stringify(updatedChats));
-
-    const blockedUsers = JSON.parse(localStorage.getItem("blockedUsers") || "[]");
-    const visibleChats = updatedChats.filter(
-      (chat) => !blockedUsers.includes(String(chat.userId))
-    );
-
-    const sorted = [...visibleChats].sort((a, b) => {
-      const timeA = a.updatedAt || 0;
-      const timeB = b.updatedAt || 0;
-      return timeB - timeA;
-    });
-
-    setChats(sorted);
+    loadChats();
     setMenuChat(null);
   };
 
@@ -165,9 +113,7 @@ function OpenDM() {
 
     localStorage.setItem("blockedUsers", JSON.stringify(updatedBlockedUsers));
 
-    setChats((prev) =>
-      prev.filter((chat) => String(chat.userId) !== String(menuChat.userId))
-    );
+    loadChats();
     setMenuChat(null);
   };
 
@@ -184,9 +130,7 @@ function OpenDM() {
       </div>
 
       <div className="dm-list">
-        {chats.length === 0 && (
-          <p className="dm-empty">まだDMはありません</p>
-        )}
+        {chats.length === 0 && <p className="dm-empty">まだDMはありません</p>}
 
         {chats.map((chat) => (
           <div
