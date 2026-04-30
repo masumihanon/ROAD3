@@ -233,7 +233,8 @@
 .user-name-block {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   line-height: 1.2;
 }
 
@@ -337,8 +338,36 @@
   position: relative;
   z-index: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  transform: translateY(3px);
+  gap: 4px;
+  padding: 10px 0;
+}
+}
+
+/* ===== Header account center: PC/スマホ共通 ===== */
+.app-header-account {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.user-name-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.user-handle {
+  font-size: 12px;
+  color: #777;
 }
